@@ -1,0 +1,23 @@
+html{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    margin: 0;
+    background-color: ghostwhite;
+}
+
+:root{
+    --primary-color: rgb(33, 125, 144) ;
+}
+
+.app-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+    padding: 0 10px;
+    color: white;
+}

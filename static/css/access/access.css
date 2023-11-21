@@ -1,0 +1,43 @@
+.reg-link a{
+    color: white;
+    text-decoration: none;
+    font-size: 0.8em;
+}
+
+
+main{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 6px grey;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+main input:not(main input[type=submit]){
+    width: calc(100% - 16px);
+    padding: 10px 8px;
+    margin-bottom: 10px;
+    background-color: rgba(211, 211, 211, 0.637);
+    outline: none;
+    border: none;
+    border-radius: 10px;
+}
+
+.login-button{
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.error{
+    font-size: 0.8em;
+    color: red;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/access/access.css">
+    </head>
+    <body>
+        <header class="app-header">
+            <h3>Quiz app</h3>
+            <section class="reg-link">
+                <a href="/auth/login">Login</a>
+            </section>
+        </header>
+        
+        <main>
+            <h3>REGISTER</h3>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="text" placeholder="Enter username" name="username" autocomplete="off">
+                <input type="password" placeholder="Enter password" name="password">
+                <input type="password" placeholder="Re-enter password" name="password2">
+                <span class="error">{{ errMsg }}</span>
+                <input type="submit" value="REGISTER" class="login-button">
+            </form>
+        </main>
+
+    </body>
+</html>
