@@ -21,3 +21,10 @@ body{
     padding: 0 10px;
     color: white;
 }
+
+
+.selected-nav{
+    color: var(--primary-color);
+    font-weight: bold;
+    background-color: rgba(33, 126, 144, 0.11);
+}

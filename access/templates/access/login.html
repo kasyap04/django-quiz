@@ -18,7 +18,6 @@
         <main>
             <h3>LOGIN</h3>
             <form method="POST" action="">
-                {% csrf_token %}
                 <input type="text" placeholder="Enter username" name="username" autocomplete="off">
                 <input type="password" placeholder="Enter password" name="password">
                 <span class="error">{{ errMsg }}</span>

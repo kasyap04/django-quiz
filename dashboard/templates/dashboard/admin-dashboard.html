@@ -1,0 +1,44 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Admin Dashboard | {{ username }}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/dashboard/dashboard.css">
+        <script src="/static/js/jquery.js"></script>
+    </head>
+    <body>
+        <header class="app-header">
+            <h3>Quiz app</h3>
+            <section class="hyper-link">
+                <a href="/auth/logout">Logout</a>
+            </section>
+        </header>
+
+        <main>
+            <aside>
+                <a href=""> <article id="nav-bashboard">Dashboard</article> </a>
+                <a href=""> <article id="nav-category">Add category</article> </a>
+                <a href=""> <article class="nav- navbar">Add questions</article> </a>
+                <a href=""> <article class="nav- navbar">View users</article> </a>
+                <a href=""> <article class="nav- navbar">View results</article> </a>
+
+            </aside>
+            <div class="main-div">
+                {% block admin %}
+
+                <script> document.getElementById("nav-bashboard").classList.add("selected-nav") ; </script>
+
+                  <div class="main-container">
+                    <header class="page-header">Dashboard</header>
+
+                    <header class="sub-header">To users</header>
+                  </div>
+                {% endblock admin %}
+            </div>
+        </main>
+
+
+    </body>
+</html>

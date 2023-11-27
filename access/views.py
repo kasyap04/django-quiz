@@ -31,6 +31,8 @@ class Login(View):
         username    = request.POST.get('username')
         password    = request.POST.get('password')
 
+        print(username, password)
+
         if username and password:
             login_status = User.objects.filter(username = username, password = password).first()
             print(login_status)
