@@ -1,7 +1,6 @@
 <!DOCTYPE>
 <html>
     <head>
-        <title>Admin Dashboard | {{ username }}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/css/base.css">
@@ -19,15 +18,15 @@
         <main>
             <aside>
                 <a href=""> <article id="nav-bashboard">Dashboard</article> </a>
-                <a href="/add-category"> <article id="nav-category">Add category</article> </a>
-                <a href=""> <article class="nav- navbar">Add questions</article> </a>
+                <a href="/category"> <article id="nav-category">Add category</article> </a>
+                <a href="/question"> <article id="nav-question">Add questions</article> </a>
                 <a href=""> <article class="nav- navbar">View users</article> </a>
                 <a href=""> <article class="nav- navbar">View results</article> </a>
 
             </aside>
             <div class="main-div">
                 {% block admin %}
-
+                <title>Admin Dashboard | {{ username }}</title>
                 <script> document.getElementById("nav-bashboard").classList.add("selected-nav") ; </script>
 
                   <div class="main-container">

@@ -1,0 +1,86 @@
+{% extends "dashboard/admin-dashboard.html" %}
+
+{% block admin %}
+<title>Add category | {{ username }}</title>
+<script> document.getElementById("nav-question").classList.add("selected-nav") ; </script>
+<style>
+.input-area{
+  margin-bottom: 10px;
+}
+
+.all-category-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.all-category-container article{
+  border: 1px solid gray;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.option-conainer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+</style>
+
+<input type="hidden" id="usertype" value="{{ user_type }}">
+
+<div class="main-container">
+  <header class="page-header">Questions</header>
+
+
+  <div class="sub_header">Choose categories</div>
+  {% if  categories%}
+    <div class="all-category-container">
+      {% for cat in  categories%}
+        <article>{{ cat.category_name }}</article>
+      {% endfor %}
+    </div>
+  {% else %}
+  <article class='nothing-found'>No category found</article>
+  {% endif %}
+
+  {% if  categories%}
+    <section class="add-category-container">
+        <article class="form-child-cont input-area">
+            <span>Question name</span>
+            <input type="text" id="question-name">
+        </article>
+
+        <section class="option-conainer">
+            <article class="form-child-cont input-area">
+                <span>Option A</span>
+                <input type="text" id="option-a" placeholder="Enter correct answer">
+            </article>
+            <article class="form-child-cont input-area">
+                <span>Option B</span>
+                <input type="text" id="option-b">
+            </article>
+        </section>
+
+        <section class="option-conainer">
+            <article class="form-child-cont input-area">
+                <span>Option C</span>
+                <input type="text" id="option-c">
+            </article>
+            <article class="form-child-cont input-area">
+                <span>Option D</span>
+                <input type="text" id="option-d">
+            </article>
+        </section>
+
+        <article class="form-child-cont">
+        <button class="primary-button" onclick="saveQustion()">Save</button>
+        </article>
+    </section>
+  {% endif %}
+
+
+  
+</div>
+<script src="/static/js/questions.js"></script>
+{% endblock admin %}

@@ -51,5 +51,14 @@ aside article{
 
 .page-header{
     font-size: 1.6em;
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: space-between;
     /* font-weight: bold; */
+}
+
+.add-category-container{
+    margin-top: 30px;
+    min-width: 400px;
+    width: 50%;
 }

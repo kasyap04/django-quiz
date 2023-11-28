@@ -1,11 +1,56 @@
 {% extends "dashboard/admin-dashboard.html" %}
 
 {% block admin %}
+<title>Add category | {{ username }}</title>
 <script> document.getElementById("nav-category").classList.add("selected-nav") ; </script>
+<style>
+.input-area{
+  margin-bottom: 10px;
+}
+
+.add-category-container{
+  margin-bottom: 30px;
+}
+
+.all-category-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.all-category-container article{
+  border: 1px solid gray;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 10px;
+}
+</style>
+
 
 <div class="main-container">
   <header class="page-header">Category</header>
 
-  <header class="sub-header"></header>
+  <section class="add-category-container">
+    <article class="form-child-cont input-area">
+      <span>Category name</span>
+      <input type="text" id="category-name">
+    </article>
+
+    <article class="form-child-cont">
+      <button class="primary-button" onclick="saveCategory()">Save</button>
+    </article>
+  </section>
+
+  <div class="sub_header">All categories</div>
+  {% if  categories%}
+    <div class="all-category-container">
+      {% for cat in  categories%}
+        <article>{{ cat.category_name }}</article>
+      {% endfor %}
+    </div>
+  {% else %}
+  <article class='nothing-found'>No category found</article>
+  {% endif %}
+  
 </div>
+<script src="/static/js/add-category.js"></script>
 {% endblock admin %}
