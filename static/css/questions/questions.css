@@ -1,0 +1,30 @@
+.page-header a{
+    font-size: 0.5em;
+    color: black;
+    text-decoration: none;
+}
+
+.input-area{
+    margin-bottom: 10px;
+  }
+  
+  select, option{
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .option-conainer{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+  }
+
+  textarea{
+    background-color: #d3d3d370;
+    border: none;
+    height: 100px;
+    border-radius: 8px;
+    resize: none;
+    outline: none;
+    padding: 10px;
+  }

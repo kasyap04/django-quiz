@@ -1,0 +1,28 @@
+{% extends "dashboard/admin-dashboard.html" %}
+
+{% block admin %}
+
+<style>
+    .main-category-div{
+        padding : 10px
+    }
+</style>
+
+<div class="main-category-div">
+    <header class="page-header">Choose category</header>
+    {% if categories %}
+    <div class="category-list-cont">
+        <ul>
+        {% for cat in categories %}
+            <li><a href="view-questins/{{ cat.id }}">{{ cat.category_name }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <script>
+        alert("No categories found. Please add some categories") ;
+        localStorage.href = "/category" ;
+    </script>
+    {% endif %}
+</div>
+{% endblock admin %}

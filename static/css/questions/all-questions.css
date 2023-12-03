@@ -1,0 +1,112 @@
+.question-main-div{
+    padding: 10px;
+}
+
+.all-questions{
+    height: calc(100vh - 140px);
+    overflow: scroll;
+}
+
+.question-list-cont{
+    margin-bottom: 20px;
+    border-bottom: 1px solid grey;
+    padding-bottom: 10px;
+}
+
+.questions-left{
+    width: calc(100% - 20px);
+    padding: 10px;
+}
+
+.question-user{
+    font-size: 0.9em;
+    color: grey;
+    margin-bottom: 10px;
+}
+
+.question-user a{
+    color: grey;
+}
+
+.question-name input, .question-desc textarea{
+    padding: 10px;
+    border: 1px solid #d3d3d331;
+    background-color: #d3d3d370;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    outline: none;
+}
+
+.question-desc textarea{
+    resize: none;
+    height: 90px;
+}
+
+
+.question-option-cont{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.question-option{
+    display: grid;
+    width: 50%;
+    margin: 10px;
+}
+
+.question-option label{
+    color: grey;
+    font-size: 0.8em;
+}
+
+.question-option input{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #d3d3d331;
+    background-color: rgba(255, 0, 0, 0.148);
+    outline: none;
+}
+
+.correct-answer{
+    background-color: rgba(144, 238, 144, 0.559) !important;
+}
+
+
+
+.questions-right{
+    width: fit-content;
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    align-items: center;
+}
+
+.questions-right button{
+    height: fit-content;
+    padding: 10px 20px;
+    margin: 10px 5 0 30px;
+    width: 100px;
+    outline: none;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.button-edit{
+    background-color: rgb(29, 78, 95);
+}
+
+.button-delete{
+    background-color: rgb(193, 28, 28);
+}
+
+.button-approve{
+    background-color: rgb(29, 112, 29);
+}
+
+.button-save{
+    background-color: rgb(38, 80, 117);
+}

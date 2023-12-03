@@ -2,59 +2,45 @@
 
 {% block admin %}
 <title>Add category | {{ username }}</title>
+<link href="/static/css/questions/questions.css" rel="stylesheet">
 <script> document.getElementById("nav-question").classList.add("selected-nav") ; </script>
-<style>
-.input-area{
-  margin-bottom: 10px;
-}
-
-.all-category-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.all-category-container article{
-  border: 1px solid gray;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 10px;
-}
-
-.option-conainer{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-</style>
 
 <input type="hidden" id="usertype" value="{{ user_type }}">
 
 <div class="main-container">
-  <header class="page-header">Questions</header>
+  <header class="page-header">
+    <span>Questions</span>
+    <a href="/view-questins">Show all</a>
+  </header>
 
 
-  <div class="sub_header">Choose categories</div>
-  {% if  categories%}
-    <div class="all-category-container">
-      {% for cat in  categories%}
-        <article>{{ cat.category_name }}</article>
-      {% endfor %}
-    </div>
+  <div class="sub_header">Choose category</div>
+  {% if  categories %}
+  <select id='category'>
+    {% for cat in  categories%}
+      <option value="{{ cat.id }}">{{ cat.category_name }}</opion>
+    {% endfor %}
+  </select>
   {% else %}
   <article class='nothing-found'>No category found</article>
   {% endif %}
 
-  {% if  categories%}
+  {% if  categories %}
     <section class="add-category-container">
         <article class="form-child-cont input-area">
             <span>Question name</span>
             <input type="text" id="question-name">
         </article>
 
+        <article class="form-child-cont input-area">
+          <span>Description</span>
+          <textarea id="question-desc"></textarea>
+      </article>
+
         <section class="option-conainer">
             <article class="form-child-cont input-area">
                 <span>Option A</span>
-                <input type="text" id="option-a" placeholder="Enter correct answer">
+                <input type="text" id="option-a">
             </article>
             <article class="form-child-cont input-area">
                 <span>Option B</span>
@@ -72,6 +58,15 @@
                 <input type="text" id="option-d">
             </article>
         </section>
+
+        <article style="margin:10px 0">
+          Choose correct answer : <select id="correct">
+            <option value='a'>Option A</opion>
+            <option value='b'>Option B</opion>
+            <option value='c'>Option C</opion>
+            <option value='d'>Option D</opion>
+          </select>
+        </article>
 
         <article class="form-child-cont">
         <button class="primary-button" onclick="saveQustion()">Save</button>
