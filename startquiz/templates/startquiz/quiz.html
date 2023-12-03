@@ -1,0 +1,21 @@
+{% extends "dashboard/dashboard.html" %}
+
+{% block admin %}
+<title>Start quiz</title>
+<link href="/static/css/quiz/start-quiz.css" rel="stylesheet">
+<script> document.getElementById("nav-quiz").classList.add("selected-nav") ; </script>
+
+<div class="main-quiz-div">
+    {% if category %}
+        <header class="page-header">Choose category</header>
+        <nav>
+        {% for c in category %}
+        <a href="{{ c.id }}">{{ c.category_name }}</a>
+        {% endfor %}
+        </nav>
+    {% endif %}
+</div>
+
+<script src="/static/js/start-quiz.js"></script>
+
+{% endblock admin %}

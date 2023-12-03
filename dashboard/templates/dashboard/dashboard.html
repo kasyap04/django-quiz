@@ -19,15 +19,19 @@
         <main>
             <aside>
                 <a href="/"> <article id="nav-bashboard">Dashboard</article> </a>
-                <a href="/category"> <article id="nav-category">Add category</article> </a>
                 <a href="/question"> <article id="nav-question">Add questions</article> </a>
+                {% if user_type == 'admin' %}
+                <a href="/category"> <article id="nav-category">Add category</article> </a>
                 <a href=""> <article class="nav- navbar">View users</article> </a>
                 <a href=""> <article class="nav- navbar">View results</article> </a>
+                {% else %}
+                <a href="/quiz"> <article id="nav-quiz">Start quiz</article> </a>
+                {% endif %}
 
             </aside>
             <div class="main-div">
                 {% block admin %}
-                <title>Admin Dashboard | {{ username }}</title>
+                <title>Dashboard | Welcome {{ username }}</title>
                 <script> document.getElementById("nav-bashboard").classList.add("selected-nav") ; </script>
 
                   <div class="main-container">

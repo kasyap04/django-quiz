@@ -1,0 +1,41 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/dashboard/dashboard.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <script src="/static/js/jquery.js"></script>
+    </head>
+    <body>
+        <header class="app-header">
+            <h3>Quiz app</h3>
+            <section class="hyper-link">
+                <a href="/auth/logout">Logout</a>
+            </section>
+        </header>
+
+        <main>
+            <aside>
+                <a href="/"> <article id="nav-bashboard">Dashboard</article> </a>
+                <a href="/question"> <article id="nav-question">Add questions</article> </a>
+
+            </aside>
+            <div class="main-div">
+                {% block admin %}
+                <title>Admin Dashboard | {{ username }}</title>
+                <script> document.getElementById("nav-bashboard").classList.add("selected-nav") ; </script>
+
+                  <div class="main-container">
+                    <header class="page-header">Dashboard</header>
+
+                    <header class="sub-header">To users</header>
+                  </div>
+                {% endblock admin %}
+            </div>
+        </main>
+
+
+    </body>
+</html>

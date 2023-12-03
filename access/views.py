@@ -91,3 +91,11 @@ class Register(View):
         return self.get(request)
     
 
+
+def logout(request):
+    try:
+        del request.session['user_id']
+    except:
+        ...
+    
+    return redirect('/')

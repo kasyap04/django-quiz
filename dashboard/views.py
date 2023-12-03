@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.views import View
+import json
 
 from access.views import login
 from access.models import User
@@ -21,13 +22,12 @@ class Dashboard(View):
             return redirect('/auth/login')
 
         context = {
-            'username' : user.username
+            'username' : user.username,
+            'user_type' : user.user_type
         }
 
-        if user.user_type == "user":
-            return render(request, 'dashboard/user-dashboard.html', context=context)
-        else:
-            return render(request, 'dashboard/admin-dashboard.html', context=context)
+        return render(request, 'dashboard/dashboard.html', context=context)
+
         
 
 class CategoryView(View):
@@ -44,7 +44,8 @@ class CategoryView(View):
 
         context = {
             'username' : user.username,
-            'categories' : categories
+            'categories' : categories,
+            'user_type' : user.user_type
         }
         
         return render(request, 'dashboard/add-category.html', context=context)
@@ -201,11 +202,121 @@ def showAllCategories(request):
     return render(request, 'dashboard/all-categories.html', context=context)
 
 
+
 def showAllQuestions(request, cat_id):
     user_id = login(request)
     if not user_id:
         return redirect('/auth/login')
     
-    cat_name = Category.objects.filter(id = cat_id).first()
+    user        = User.objects.filter(id = user_id).first()
+    cat_name    = Category.objects.filter(id = cat_id).first()
+    questions   = []
 
-    return render(request, 'dashboard/all-questions.html', )
+    if user.user_type != "admin":
+        qstns = Question.objects.filter(added_by = user_id, category_id = cat_id).select_related('auth').values("id", "question_name", "description", "added_by", "approved_status")
+    else:
+        qstns = Question.objects.filter(category_id = cat_id).values("id", "question_name", "description", "added_by", "approved_status")
+    
+    for q in qstns:
+        u = User.objects.filter(id = q['added_by']).first()
+        username = u.username if u else 'unknown'
+        questions.append({
+            'id' : q['id'],
+            'name' : q['question_name'],
+            'desc' : q['description'],
+            'approve' : q['approved_status'],
+            'options' : list(Options.objects.filter(question_id = q['id']).values("id", "option", "answer")),
+            'user_id' : u.id if u else 0,
+            'username' : username if u.user_type != 'admin' else 'You'
+        })
+
+    # print(questions)
+
+    context = {
+        'cat_name' : cat_name.category_name,
+        'questions' : questions,
+        'user_type' : user.user_type
+    }
+
+    return render(request, 'dashboard/all-questions.html', context=context)
+
+
+
+def editQuestion(request):
+    if request.method != "POST":
+        return HttpResponse("", status=405)
+
+    user_id = login(request)
+    if not user_id:
+        return JsonResponse({'status' : False, 'msg' : 'login'}, status = 200)
+
+    qstn    = request.POST.get('qstn')
+    qstn_id = request.POST.get('id')
+    desc    = request.POST.get('desc')
+    options = request.POST.get('option')
+
+
+    question = Question.objects.filter(id = qstn_id).first()
+    if not question:
+        return JsonResponse({'status' : False, 'msg' : 'Question not found'}, status = 200)
+
+    question.question_name  = qstn
+    question.description    = desc
+    question.save()
+
+    if options:
+        try:
+            options = json.loads(options)
+            for o in options:
+                opt = Options.objects.filter(id = o['id']).first()
+                if opt:
+                    opt.option = o['value']
+                    opt.save()
+        except Exception as e:
+            print(f"ERROR => {e}")
+
+    return JsonResponse({'status' : True, 'msg' : 'Successfully edited question'}, status = 200)
+
+
+
+
+def approveQuestion(request):
+    if request.method != "POST":
+        return HttpResponse("", status=405)
+
+    user_id = login(request)
+    if not user_id:
+        return JsonResponse({'status' : False, 'msg' : 'login'}, status = 200)
+    
+    user = User.objects.filter(id = user_id).first()
+    if user.user_type != "admin":
+        return JsonResponse({'status' : False, 'msg' : 'login'}, status = 200)
+    
+    qstn_id = request.POST.get('id')
+
+    qstn = Question.objects.filter(id = qstn_id).first()
+    qstn.approved_status = 1
+    qstn.save()
+
+    return JsonResponse({'status' : True, 'msg' : 'Successfully approved'}, status = 200)
+
+
+
+def deleteQuestion(request):
+    if request.method != "POST":
+        return HttpResponse("", status=405)
+
+    user_id = login(request)
+    if not user_id:
+        return JsonResponse({'status' : False, 'msg' : 'login'}, status = 200)
+    
+    user = User.objects.filter(id = user_id).first()
+    if user.user_type != "admin":
+        return JsonResponse({'status' : False, 'msg' : 'login'}, status = 200)
+    
+    qstn_id = request.POST.get('id')
+
+    Question.objects.filter(id = qstn_id).delete()
+    Options.objects.filter(question_id = qstn_id).delete()
+
+    return JsonResponse({'status' : True, 'msg' : 'Successfully approved'}, status = 200)

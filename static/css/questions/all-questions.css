@@ -28,11 +28,14 @@
     color: grey;
 }
 
+.question-name input{
+    font-weight: bold;
+}
+
 .question-name input, .question-desc textarea{
     padding: 10px;
     border: 1px solid #d3d3d331;
     background-color: #d3d3d370;
-    font-weight: bold;
     border-radius: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -66,7 +69,6 @@
     border-radius: 10px;
     border: 1px solid #d3d3d331;
     background-color: rgba(255, 0, 0, 0.148);
-    outline: none;
 }
 
 .correct-answer{
@@ -109,4 +111,12 @@
 
 .button-save{
     background-color: rgb(38, 80, 117);
+    display: none;
+}
+
+.no-questions{
+    width: 100%;
+    color: grey;
+    text-align: center;
+    font-size: 0.9em;
 }
