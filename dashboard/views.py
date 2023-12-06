@@ -193,11 +193,13 @@ def showAllCategories(request):
     user_id = login(request)
     if not user_id:
         return redirect('/auth/login')
-
-    categories = Category.objects.all()
+    
+    user        = User.objects.filter(id = user_id).first()
+    categories  = Category.objects.all()
 
     context = {
         'categories' : categories,
+        'user_type' : user.user_type
     }
     return render(request, 'dashboard/all-categories.html', context=context)
 

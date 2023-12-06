@@ -2,7 +2,82 @@
     padding: 10px;
 }
 
+.quiz-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
 nav a{
     padding: 5px;
     color: black;
+}
+
+.timer{
+    font-size: 0.8em;
+}
+
+.qstn-cont p{
+    font-size: 0.9em;
+    color: grey;
+}
+
+.options{
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: 20px;
+}
+
+.options article{
+    margin-bottom: 10px;
+}
+
+.quiz-left{
+    width: calc(60% - 20px);
+}
+
+.quiz-right{
+    width: calc(30% - 20px);
+    padding: 10px;
+}
+
+.quiz-right .qstns-link{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+
+.qstns-link article{
+    border: 1px solid rgba(128, 128, 128, 0.322);
+    width:30px;
+    display: grid;
+    font-weight: bold;
+    place-items: center;
+    border-radius: 8px;
+    height: 30px;
+    margin: 5px;
+}
+
+.selected-qstn{
+    background-color: rgba(49, 148, 89, 0.553);
+}
+
+.button-cont{
+    margin-top: 30px;
+}
+
+.button-cont button{
+    padding: 10px;
+    width: 100px;
+    background-color: transparent;
+    color: var(--primary-color);
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+}
+
+.error{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    color: grey;
 }
