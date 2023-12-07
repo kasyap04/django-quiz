@@ -49,5 +49,16 @@ class StartQuick(View):
                 context['can_next']     = index < conf.max_questions - 1
                 context['qstn_no']      = index + 1
                 context['qstns_links']  = qstn_links
+                context['tot_time']     = conf.time_per_questions * conf.max_questions
 
         return render(request, 'startquiz/quiz.html', context=context)
+    
+
+class ResultView(View):
+    def post(self, request):
+        user_id = login(request)
+
+        if not user_id:
+            return redirect('/auth/login')
+        
+        quiz = request.POST.get('quiz')

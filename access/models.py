@@ -17,6 +17,7 @@ class Setting(models.Model):
     id = models.AutoField(primary_key=True)
     max_questions = models.IntegerField()
     mark_per_questions = models.FloatField()
+    time_per_questions = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'settings'

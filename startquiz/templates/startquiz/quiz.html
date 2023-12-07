@@ -5,6 +5,7 @@
 <link href="/static/css/quiz/start-quiz.css" rel="stylesheet">
 <script> document.getElementById("nav-quiz").classList.add("selected-nav") ; </script>
 
+<input type="hidden" id='max-time' value="{{ tot_time }}">
 <div class="main-quiz-div">
     {% if category %}
         <header class="page-header">Choose category</header>
@@ -21,24 +22,27 @@
 
     {% if not category and question %}
     <header class="page-header">
-        <span>Your question</span>
-        <span class="timer">5:00:00</span>
+        <span>Your questions</span>
+        <span class="timer" id="quiz-timer"></span>
     </header>
 
     <main class="quiz-wrapper">
         <div class="quiz-left">
             <section class="qstn-cont">
+                <input type="hidden" value="{{ question.id }}" id="qstn-no">
                 <b>{{ qstn_no }}. {{ question.question_name }}</b>
                 <p>{{ question.description }}</p>
                 
                 <section class="options">
                     {%  for o in options %}
-                        <article><input type="radio" value="a">{{ o.option }}</article>
+                        <article><input type="radio" value="{{ o.id }}" name='opt' id="opt{{ o.id }}" onclick="chooseOption({{ question.id }}, {{ o.id }})">{{ o.option }}</article>
                     {% endfor %}
                 </section>
                 <section class="button-cont">
                     {% if index > 0 %}
-                    <button onclick="previousQuestion()">Previous</button>
+                    <button onclick="previousQuestion({{ index }})">Previous</button>
+                    {% else %}
+                    <button class="hidden"></button>
                     {% endif %}
                     {% if can_next %}
                     <button onclick="nextQuestion({{ index }})">Next</button>
@@ -52,10 +56,11 @@
             <div class="qstns-link">
                 {% if qstns_links %}
                 {% for q in qstns_links %}
-                    <article {% if q.0  == index %} class="selected-qstn" {% endif %} > <a href="/quiz/{{ q.1 }}">{{ q.0 }}</a> </article>
+                    <article {% if q.0  == qstn_no %} class="selected-qstn" {% endif %} > <a href="/quiz/{{ q.1 }}">{{ q.0 }}</a> </article>
                 {% endfor %}
                 {% endif %}
             </div>
+            <button class="finish-button" onclick="finishQuiz()">Finish quiz</button>
         </div>
     </main>
 
