@@ -1,0 +1,150 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/dashboard/dashboard.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <script src="/static/js/jquery.js"></script>
+    </head>
+    <body>
+        <header class="app-header">
+            <h3>Quiz app</h3>
+            <section class="hyper-link">
+                {% if user_type == 'user' %}
+                {{ username }} | 
+                {% else %}
+                Admin | 
+                {% endif %}
+                <a href="/auth/logout">Logout</a>
+            </section>
+        </header>
+
+        <main>
+            <aside>
+                <a href="/"> <article id="nav-bashboard">Dashboard</article> </a>
+                <a href="/question"> <article id="nav-question">Add questions</article> </a>
+                {% if user_type == 'user' %}
+                <a href="/quiz"> <article id="nav-quiz">Start quiz</article> </a>
+                {% else %}
+                <a href="/category"> <article id="nav-category">Add category</article> </a>
+                <a href="/settings"> <article id="nav-settings">Settings</article> </a>
+                {% endif %}
+
+            </aside>
+            <div class="main-div">
+                {% block admin %}
+                <title>Dashboard | Welcome {{ username }}</title>
+                <script> document.getElementById("nav-bashboard").classList.add("selected-nav") ; </script>
+
+                  <div class="main-container">
+                    <header class="page-header">Dashboard</header>
+                    {% if all_result %}
+                    
+                    <table border="0" cellpadding="10", cellspacing="0" class="result-table">
+                        <tr>
+                            <th>No</th>
+                            {% if user_type == 'admin' %}
+                            <th>User</th>
+                            {% endif %}
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Mark obtained</th>
+                            <th>Mark require</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for res in all_result %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            {% if user_type == 'admin' %}
+                            <td>{{ res.user__username }}</td>
+                            {% endif %}
+                            <td>{{ res.category__category_name }}</td>
+                            <td>{{ res.date }}</td>
+                            <td>
+                                {% if res.status == 0 %}
+                                failed
+                                {% else %}
+                                Passed
+                                {% endif %}
+                            </td>
+                            <td>{{ res.total_mark }}</td>
+                            <td>{{ res.max_mark }}</td>
+                            <td>
+                                <a href="/result/{{ res.id }}">view</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                    
+                    <div class="result-cont">
+                      
+                    </div>
+                
+                    {% endif %}
+
+                    {% if result %}
+                    {% if user_type == 'admin' %}
+                    <article class="question-detail-cont">
+                        <span>User :</span> 
+                        <label>{{ username }} </label>
+                    </article>
+                    {% endif %}
+                    
+                    <article class="question-detail-cont">
+                        <span>Category : </span>
+                        <label>{{ result.category__category_name }}</label>
+                    </article>
+
+                    <article class="question-detail-cont">
+                        <span>Mark gained : </span>
+                        <label>{{ result.total_mark }} <span>out of</span> {{ max_mark }}</label>
+                    </article>
+
+                    <article class="question-detail-cont">
+                        <span>Status : </span>
+                        <label>
+                            {% if result.status == 0 %}
+                            <font color="red"><b>Failed</b></font>
+                            {% else %}
+                            <font color="green"><b>Passed</b></font>
+                            {% endif %}
+                        </label>
+                    </article>
+
+      
+                    {% for q in attempt %}
+                    <section class="attempt-question-cont">
+                        <b>{{ forloop.counter }}. {{ q.question__question_name }}</b>
+                        <p>{{ q.question__description }}</p>
+                        <section class="qstion-options">
+                            {% for o in q.options %}
+                            <article
+                            {% if o.answer == 1 %}
+                            class="correct-answer"
+                            {% elif q.option == o.id and o.answer == 0 %}
+                            class="incorrect-answer"
+                            {% else %}
+                            class="normal-answer"
+                            {% endif %}
+                             > 
+                             {{ o.option }}
+                            </article>
+                            {% endfor %}
+                        </section>
+                    </section>
+                    {% endfor %}
+
+                    {% endif %}
+                    
+                  </div>
+                {% endblock admin %}
+            </div>
+        </main>
+
+
+    </body>
+</html>

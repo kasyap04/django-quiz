@@ -5,3 +5,6 @@ dashboard/migrations/__pycache__
 
 access/__pycache__
 access/migrations/__pycache__
+
+startquiz/__pycache__
+startquiz/migrations/__pycache__

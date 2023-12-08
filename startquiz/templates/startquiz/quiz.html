@@ -1,0 +1,89 @@
+{% extends "dashboard/dashboard.html" %}
+
+{% block admin %}
+<title>Start quiz</title>
+<link href="/static/css/quiz/start-quiz.css" rel="stylesheet">
+<script> document.getElementById("nav-quiz").classList.add("selected-nav") ; </script>
+
+<input type="hidden" id='max-time' value="{{ tot_time }}">
+<input type="hidden" id='cat_id' value="{{ category_id }}">
+
+<div class="main-quiz-div">
+    {% if category %}
+        <header class="page-header">Choose category</header>
+        <nav>
+        {% for c in category %}
+        <a href="{{ c.id }}">{{ c.category_name }}</a>
+        {% endfor %}
+        </nav>
+    {% endif %}
+
+    {% if msg %}
+    <article class="error">{{ msg }}</article>
+    {% endif %}
+
+    {% if not category and question %}
+    <header class="page-header">
+        <span>Your questions</span>
+        <span class="timer" id="quiz-timer"></span>
+    </header>
+
+    <main class="quiz-wrapper">
+        <div class="quiz-left">
+            <section class="qstn-cont">
+                <input type="hidden" value="{{ question.id }}" id="qstn-no">
+                <b>{{ qstn_no }}. {{ question.question_name }}</b>
+                <p>{{ question.description }}</p>
+                
+                <section class="options">
+                    {%  for o in options %}
+                        <article><input type="radio" value="{{ o.id }}" name='opt' id="opt{{ o.id }}" onclick="chooseOption({{ question.id }}, {{ o.id }})">{{ o.option }}</article>
+                    {% endfor %}
+                </section>
+                <section class="button-cont">
+                    {% if index > 0 %}
+                    <button onclick="previousQuestion({{ index }})">Previous</button>
+                    {% else %}
+                    <button class="hidden"></button>
+                    {% endif %}
+                    {% if can_next %}
+                    <button onclick="nextQuestion({{ index }})">Next</button>
+                    {% endif %}
+                </section>
+        
+            </section>
+        </div>
+        <div class="quiz-right">
+            <header class="sub-header">Question history</header>
+            <div class="qstns-link">
+                {% if qstns_links %}
+                {% for q in qstns_links %}
+                    <article {% if q.0  == qstn_no %} class="selected-qstn" {% endif %} > <a href="/quiz/{{ q.1 }}">{{ q.0 }}</a> </article>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <button class="finish-button" onclick="finishQuiz()">Finish quiz</button>
+        </div>
+
+        <div class="outer-cont">
+            <div class="inner-cont">
+                <header>Oops..</header>
+                <section>Time is up!!</section>
+                <button class="finish-button" onclick="finishQuiz()">Finish quiz</button>
+            </div>
+        </div>
+
+    </main>
+
+
+    {% endif %}
+    
+
+</div>
+
+
+
+
+<script src="/static/js/start-quiz.js"></script>
+
+{% endblock admin %}

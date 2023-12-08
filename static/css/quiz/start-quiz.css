@@ -1,0 +1,140 @@
+.main-quiz-div{
+    padding: 10px;
+}
+
+.quiz-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+nav a{
+    padding: 5px;
+    color: black;
+}
+
+.timer{
+    font-size: 0.8em;
+}
+
+.qstn-cont p{
+    font-size: 0.9em;
+    color: grey;
+}
+
+.options{
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: 20px;
+}
+
+.options article{
+    margin-bottom: 10px;
+}
+
+.quiz-left{
+    width: calc(60% - 20px);
+}
+
+.quiz-right{
+    width: calc(30% - 20px);
+    padding: 10px;
+}
+
+.quiz-right .qstns-link{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+
+.qstns-link article{
+    border: 1px solid rgba(128, 128, 128, 0.322);
+    width:30px;
+    display: grid;
+    font-weight: bold;
+    place-items: center;
+    border-radius: 8px;
+    height: 30px;
+    margin: 5px;
+}
+
+.qstns-link article a{
+    text-decoration: none;
+}
+
+.selected-qstn{
+    background-color: var(--primary-color);
+}
+
+.selected-qstn a{
+    color: white;
+}
+
+.button-cont{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.button-cont button{
+    padding: 10px;
+    width: 100px;
+    background-color: rgba(33, 126, 144, 0.096) ;
+    color: var(--primary-color);
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+}
+
+.error{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    color: grey;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.finish-button{
+    width: 100%;
+    margin-top: 40px;
+    padding: 10px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+
+.outer-cont{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, 0.333);
+    display: none;
+}
+
+.inner-cont{
+    position: absolute;
+    width: 30%;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.inner-cont header{
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 20px;
+}

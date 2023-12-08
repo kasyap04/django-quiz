@@ -1,4 +1,4 @@
-{% extends "dashboard/admin-dashboard.html" %}
+{% extends "dashboard/dashboard.html" %}
 
 {% block admin %}
 <title>{{ cat_name }} Questions</title>
@@ -8,85 +8,63 @@
     <header class="page-header">Questions</header>
 
     <div class="all-questions">
-        
-            <section class="question-list-cont">
-                <div class="questions-left">
-                    <article class="question-user">Added by : <a href="">You</a></article>
-                    <article class="question-name">
-                        <input type="text" value="Name of question" readonly>
-                    </article>
-                    <article class="question-desc">
-                        <textarea readonly>Body of question</textarea>
-                    </article>
-                    <section class="question-option-cont">
-                        <article class="question-option">
-                            <label>Option A</label>
-                            <input type="text" value="Value 1" readonly>
-                        </article>
-                        <article class="question-option">
-                            <label>Option B</label>
-                            <input type="text" value="Value 1" readonly>
-                        </article>
-                    </section>
-                    <section class="question-option-cont">
-                        <article class="question-option">
-                            <label>Option C</label>
-                            <input type="text" value="Value 1" class="correct-answer" readonly>
-                        </article>
-                        <article class="question-option">
-                            <label>Option D</label>
-                            <input type="text" value="Value 1" readonly>
-                        </article>
-                    </section>
-                </div>
-                <div class="questions-right">
-                    <button class="button-edit">Edit</button>
-                    <button class="button-delete">Delete</button>
-                    <button class="button-approve">Approve</button>
-                    <button class="button-save">Save</button>
-                </div>
-            </section>
-        
-            <section class="question-list-cont">
-                <div class="questions-left">
-                    <article class="question-user">Added by : <a href="">You</a></article>
-                    <article class="question-name">
-                        <input type="text" value="Name of question" readonly>
-                    </article>
-                    <article class="question-desc">
-                        <textarea readonly>Body of question</textarea>
-                    </article>
-                    <section class="question-option-cont">
-                        <article class="question-option">
-                            <label>Option A</label>
-                            <input type="text" value="Value 1" readonly>
-                        </article>
-                        <article class="question-option">
-                            <label>Option B</label>
-                            <input type="text" value="Value 1" readonly>
-                        </article>
-                    </section>
-                    <section class="question-option-cont">
-                        <article class="question-option">
-                            <label>Option C</label>
-                            <input type="text" value="Value 1" class="correct-answer" readonly>
-                        </article>
-                        <article class="question-option">
-                            <label>Option D</label>
-                            <input type="text" value="Value 1" readonly>
-                        </article>
-                    </section>
-                </div>
-                <div class="questions-right">
-                    <button class="button-edit">Edit</button>
-                    <button class="button-delete">Delete</button>
-                    <button class="button-approve">Approve</button>
-                    <button class="button-save">Save</button>
-                </div>
-            </section>
 
+        {% if questions %}
+
+        {% for q in questions %}
+        <section class="question-list-cont">
+            <input type='hidden' id="qstnId{{ forloop.counter }}" value="{{ q.id }}">
+            <div class="questions-left question-{{ forloop.counter }}">
+                {% if user_type == 'admin' %}
+                    <article class="question-user">Added by : <a href="">{{ q.username }}</a></article>
+                {% endif %}
+                <article class="question-name">
+                    <input type="text" id="qstn-name-{{ forloop.counter }}" value="{{ q.name }}" readonly>
+                </article>
+                <article class="question-desc">
+                    <textarea id="qstn-desc-{{ forloop.counter }}" readonly>{{ q.desc }}</textarea>
+                </article>
+                <section class="question-option-cont">
+                    <article class="question-option">
+                        <label>Option A</label>
+                        <input type="text" id="qstn-optA-{{ forloop.counter }}" data-id="{{ q.options.0.id }}" value="{{ q.options.0.option }}" {% if  q.options.0.answer == 1  %} class="correct-answer" {% endif %} readonly>
+                    </article>
+                    <article class="question-option">
+                        <label>Option B</label>
+                        <input type="text" id="qstn-optB-{{ forloop.counter }}" data-id="{{ q.options.1.id }}" value="{{ q.options.1.option }}" {% if  q.options.1.answer == 1  %} class="correct-answer" {% endif %} readonly>
+                    </article>
+                </section>
+                <section class="question-option-cont">
+                    <article class="question-option">
+                        <label>Option C</label>
+                        <input type="text" id="qstn-optC-{{ forloop.counter }}" data-id="{{ q.options.2.id }}" value="{{ q.options.2.option }}" {% if q.options.2.answer == 1 %} class="correct-answer" {% endif %} readonly>
+                    </article>
+                    <article class="question-option">
+                        <label>Option D</label>
+                        <input type="text" id="qstn-optD-{{ forloop.counter }}" data-id="{{ q.options.3.id }}" value="{{ q.options.3.option }}" {% if  q.options.3.answer == 1  %} class="correct-answer" {% endif %} readonly>
+                    </article>
+                </section>
+            </div>
+            <div class="questions-right">
+                <button class="button-edit" onclick="editQuestion('{{ forloop.counter }}')">Edit</button>
+                {% if user_type == 'admin' %}
+                <button class="button-delete" onclick="deleteQuestion({{ q.id }})">Delete</button>
+                {% if approve == 0 %}
+                <button class="button-approve" onclick="approveQuestion({{ q.id }})">Approve</button>
+                {% endif %}
+                {% endif %}
+                <button class="button-save saveBtn{{ forloop.counter }}" onclick="saveQuestion(1)">Save</button>
+            </div>
+        </section>
+        {% endfor %}
+
+        {% else %}
+        <article class="no-questions">No questions found in {{ cat_name }} category</article>
+        {% endif %}
+    
     </div>
 
 </div>
+<script src="/static/js/questions.js"></script>
 
 {% endblock admin %}

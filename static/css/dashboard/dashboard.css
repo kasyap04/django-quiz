@@ -63,3 +63,52 @@ aside article{
     min-width: 400px;
     width: 50%;
 }
+
+
+.result-table{
+    width: 100%;
+}
+
+.result-table th{
+    text-align: start;
+    color: grey;
+    font-weight: normal;
+}
+
+.qstion-options{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.normal-answer{
+    color: grey;
+}
+
+.correct-answer{
+    color: green;
+    font-weight: bold;
+}
+
+.incorrect-answer{
+    color: red;
+    font-weight: bold;
+}
+
+.attempt-question-cont{
+    margin-top: 20px;
+    border-bottom: 1px solid grey;
+    padding-bottom: 10px;
+}
+
+.question-detail-cont span{
+    font-size: 0.9em;
+    color: grey;
+}
+
+.qstion-options article{
+    margin: 10px;
+}
+
+.attempt-question-cont p{
+    font-size: 0.85em;
+}

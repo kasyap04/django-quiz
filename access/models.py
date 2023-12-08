@@ -11,3 +11,14 @@ class User(models.Model):
 
     class Meta:
         db_table = 'auth'
+
+
+class Setting(models.Model):
+    id = models.AutoField(primary_key=True)
+    max_questions = models.IntegerField()
+    mark_per_questions = models.FloatField()
+    time_per_questions = models.IntegerField(default=1)
+    pass_percentage = models.IntegerField(default=70)
+
+    class Meta:
+        db_table = 'settings'
