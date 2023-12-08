@@ -25,6 +25,8 @@ class StartQuick(View):
         qstn_links      = []
         context         = {}
 
+        context['username'] = User.objects.filter(id = user_id).first().username
+
         if cat_id is not None:
             all_questions = list(Question.objects.filter(category_id = cat_id).exclude(added_by=user_id).order_by('id').values())
 
@@ -115,5 +117,5 @@ class ResultView(View):
             res.save()
             
 
-        return JsonResponse({'status' : True, 'msg' : 'Your result successfully saved', 'loc' : f'quiz/result/{result.id}'}, status=200)
+        return JsonResponse({'status' : True, 'msg' : 'Your result successfully saved', 'loc' : f'/result/{result.id}'}, status=200)
     

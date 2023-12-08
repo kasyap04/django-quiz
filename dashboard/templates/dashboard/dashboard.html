@@ -12,6 +12,11 @@
         <header class="app-header">
             <h3>Quiz app</h3>
             <section class="hyper-link">
+                {% if user_type == 'user' %}
+                {{ username }} | 
+                {% else %}
+                Admin | 
+                {% endif %}
                 <a href="/auth/logout">Logout</a>
             </section>
         </header>
@@ -20,12 +25,11 @@
             <aside>
                 <a href="/"> <article id="nav-bashboard">Dashboard</article> </a>
                 <a href="/question"> <article id="nav-question">Add questions</article> </a>
-                {% if user_type == 'admin' %}
-                <a href="/category"> <article id="nav-category">Add category</article> </a>
-                <!-- <a href=""> <article class="nav- navbar">View users</article> </a>
-                <a href=""> <article id="nav-result navbar">View results</article> </a> -->
-                {% else %}
+                {% if user_type == 'user' %}
                 <a href="/quiz"> <article id="nav-quiz">Start quiz</article> </a>
+                {% else %}
+                <a href="/category"> <article id="nav-category">Add category</article> </a>
+                <a href="/settings"> <article id="nav-settings">Settings</article> </a>
                 {% endif %}
 
             </aside>
@@ -36,7 +40,6 @@
 
                   <div class="main-container">
                     <header class="page-header">Dashboard</header>
-
                     {% if all_result %}
                     
                     <table border="0" cellpadding="10", cellspacing="0" class="result-table">
@@ -48,8 +51,8 @@
                             <th>Category</th>
                             <th>Date</th>
                             <th>Status</th>
-                            <th>Mark obtain</th>
-                            <th>Mark requir</th>
+                            <th>Mark obtained</th>
+                            <th>Mark require</th>
                             <th>Action</th>
                         </tr>
                         {% for res in all_result %}
@@ -60,10 +63,18 @@
                             {% endif %}
                             <td>{{ res.category__category_name }}</td>
                             <td>{{ res.date }}</td>
-                            <td>{{ res.status }}</td>
-                            <td>{{ res.max_mark }}</td>
+                            <td>
+                                {% if res.status == 0 %}
+                                failed
+                                {% else %}
+                                Passed
+                                {% endif %}
+                            </td>
                             <td>{{ res.total_mark }}</td>
-                            <td>view</td>
+                            <td>{{ res.max_mark }}</td>
+                            <td>
+                                <a href="/result/{{ res.id }}">view</a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -73,6 +84,60 @@
                       
                     </div>
                 
+                    {% endif %}
+
+                    {% if result %}
+                    {% if user_type == 'admin' %}
+                    <article class="question-detail-cont">
+                        <span>User :</span> 
+                        <label>{{ username }} </label>
+                    </article>
+                    {% endif %}
+                    
+                    <article class="question-detail-cont">
+                        <span>Category : </span>
+                        <label>{{ result.category__category_name }}</label>
+                    </article>
+
+                    <article class="question-detail-cont">
+                        <span>Mark gained : </span>
+                        <label>{{ result.total_mark }} <span>out of</span> {{ max_mark }}</label>
+                    </article>
+
+                    <article class="question-detail-cont">
+                        <span>Status : </span>
+                        <label>
+                            {% if result.status == 0 %}
+                            <font color="red"><b>Failed</b></font>
+                            {% else %}
+                            <font color="green"><b>Passed</b></font>
+                            {% endif %}
+                        </label>
+                    </article>
+
+      
+                    {% for q in attempt %}
+                    <section class="attempt-question-cont">
+                        <b>{{ forloop.counter }}. {{ q.question__question_name }}</b>
+                        <p>{{ q.question__description }}</p>
+                        <section class="qstion-options">
+                            {% for o in q.options %}
+                            <article
+                            {% if o.answer == 1 %}
+                            class="correct-answer"
+                            {% elif q.option == o.id and o.answer == 0 %}
+                            class="incorrect-answer"
+                            {% else %}
+                            class="normal-answer"
+                            {% endif %}
+                             > 
+                             {{ o.option }}
+                            </article>
+                            {% endfor %}
+                        </section>
+                    </section>
+                    {% endfor %}
+
                     {% endif %}
                     
                   </div>

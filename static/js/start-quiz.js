@@ -4,13 +4,13 @@ var sessionData = sessionStorage.getItem(SESSION_KEY) ;
 var timerObj    = document.getElementById('quiz-timer') ;
 
 if(!sessionStorage.getItem('quiz-timer') && timerObj != null){
-    var qstn_time   = document.getElementById('max-time').value ;
+    var qstn_time   = parseInt(document.getElementById('max-time').value);
     var CONFIRM     = confirm(`Click OK to start quiz.\nQuiz will end in ${qstn_time} minutes`) ;
     
     if(!CONFIRM){
         history.back() ;
     } else {
-        t = qstn_time * 60 ;
+        t = (qstn_time + 1) * 60 ;
         sessionStorage.setItem('quiz-timer', t) ;
     }
 }
@@ -39,13 +39,20 @@ displayTime = (minutes, seconds) => {
 
 
 getSavedTime = () => {
-    let time    = parseInt(sessionStorage.getItem('quiz-timer')) ;
+    let time    = sessionStorage.getItem('quiz-timer') ; parseInt() ;
+    if(!time){
+        return false ;
+    }
+
+    time = parseInt(time) ;
+
     let minutes = Math.floor(time / 60),
     seconds     = time - minutes * 60; 
 
     if(minutes <= 0 || isNaN(time)){
         clearInterval(TIMER) ;
         minutes = seconds = 0 ;
+        $(".outer-cont").show() ;
     }
 
     displayTime(minutes, seconds) ;

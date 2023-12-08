@@ -1,0 +1,39 @@
+{% extends "dashboard/dashboard.html" %}
+
+{% block admin %}
+<title>Settings</title>
+<link href="/static/css/access/settings.css" rel="stylesheet">
+<script> document.getElementById("nav-settings").classList.add("selected-nav") ; </script>
+
+
+
+<main class="setting-cont">
+    <header class="page-header">Settings</header>
+
+    <article class="form-child-cont">
+        <label>Max questions in a category</label>
+        <input type="text" value="{{ max_questions }}" id="max_questions">
+    </article>
+
+    <article class="form-child-cont">
+        <label>Max marks per questions</label>
+        <input type="text" value="{{ mark_per_questions }}" id="mark_per_questions">
+    </article>
+
+    <article class="form-child-cont">
+        <label>Time per questions (minute)</label>
+        <input type="text" value="{{ time_per_questions }}" id="time_per_questions">
+    </article>
+
+    <article class="form-child-cont">
+        <label>Percentage for pass</label>
+        <input type="text" value="{{ pass_percentage }}" id="pass_percentage">
+    </article>
+
+    <button class="settings-button" onclick="saveSettings()">Save</button>
+
+
+</main>
+
+<script src="/static/js/settings.js"></script>
+{% endblock admin %}

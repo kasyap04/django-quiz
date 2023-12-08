@@ -7,6 +7,7 @@
 
 <input type="hidden" id='max-time' value="{{ tot_time }}">
 <input type="hidden" id='cat_id' value="{{ category_id }}">
+
 <div class="main-quiz-div">
     {% if category %}
         <header class="page-header">Choose category</header>
@@ -63,9 +64,16 @@
             </div>
             <button class="finish-button" onclick="finishQuiz()">Finish quiz</button>
         </div>
+
+        <div class="outer-cont">
+            <div class="inner-cont">
+                <header>Oops..</header>
+                <section>Time is up!!</section>
+                <button class="finish-button" onclick="finishQuiz()">Finish quiz</button>
+            </div>
+        </div>
+
     </main>
-
-
 
 
     {% endif %}

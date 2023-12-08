@@ -107,3 +107,34 @@ nav a{
     font-weight: bold;
     font-size: 1em;
 }
+
+
+.outer-cont{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, 0.333);
+    display: none;
+}
+
+.inner-cont{
+    position: absolute;
+    width: 30%;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.inner-cont header{
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 20px;
+}

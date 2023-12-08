@@ -37,11 +37,21 @@ class Dashboard(View):
             else:
                 all_res = Result.objects.all().values('id', 'user__username', 'status', 'total_mark', 'category__category_name', 'date')
 
-
             context['all_result'] =  all_res
             for i in all_res:
                 i['max_mark'] = conf.mark_per_questions * conf.max_questions
-                print(i)
+        else:
+            result  = Result.objects.filter(id = result_id).values('id', 'user__username', 'status', 'total_mark', 'category__category_name', 'date')[0]
+            attempt = QuizAttempt.objects.filter(result = result['id']).all().values("question", "question__question_name", "question__description", "option", "option__option")
+
+            context['result'] = result
+            context['attempt'] = attempt
+            context['max_mark'] = conf.mark_per_questions * conf.max_questions
+
+            for a in attempt:
+                a['options'] = Options.objects.filter(question_id = a['question']).all().values()
+
+            print(context)
 
         return render(request, 'dashboard/dashboard.html', context=context)
 
