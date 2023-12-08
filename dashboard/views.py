@@ -4,13 +4,15 @@ from django.views import View
 import json
 
 from access.views import login
-from access.models import User
+from access.models import User, Setting
 from dashboard.models import Category, Question, Options
+from startquiz.models import QuizAttempt, Result
+
 # Create your views here.
 
 
 class Dashboard(View):
-    def get(self, request):
+    def get(self, request, result_id = None):
         user_id = login(request)
         
         if not user_id:
@@ -25,6 +27,21 @@ class Dashboard(View):
             'username' : user.username,
             'user_type' : user.user_type
         }
+
+
+        conf = Setting.objects.first()
+
+        if result_id is None:
+            if user.user_type == 'user':
+                all_res = Result.objects.filter(user = user_id).all().values('id', 'user__username', 'status', 'total_mark', 'category__category_name', 'date')
+            else:
+                all_res = Result.objects.all().values('id', 'user__username', 'status', 'total_mark', 'category__category_name', 'date')
+
+
+            context['all_result'] =  all_res
+            for i in all_res:
+                i['max_mark'] = conf.mark_per_questions * conf.max_questions
+                print(i)
 
         return render(request, 'dashboard/dashboard.html', context=context)
 

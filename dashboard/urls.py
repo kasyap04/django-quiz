@@ -14,4 +14,5 @@ urlpatterns = [
     path('edit-question', editQuestion, name="edit-question"),
     path('approve-question', approveQuestion, name="edit-question"),
     path('delete-question', deleteQuestion, name="edit-question"),
+    path('<result_id>', Dashboard.as_view(), name="dashboard"),
 ]

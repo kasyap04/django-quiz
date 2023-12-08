@@ -97,5 +97,37 @@ finishQuiz = () => {
         let quiz = sessionStorage.getItem(SESSION_KEY) ;
         clearInterval(TIMER) ;
         sessionStorage.clear() ;
+
+        let cat_id = document.getElementById('cat_id').value.trim() ;
+
+        if(!cat_id){
+            alert("Category not found") ;
+            return false ;
+        }
+
+        $.ajax({
+            url : "/quiz/save",
+            type : 'POST',
+            data : { 
+                cat_id,
+                quiz : quiz
+             },
+            success: (response) => {
+                if(response.status){
+                    console.log(response);
+                    alert(response.msg) ;
+                    location.href = response.loc ;
+                    // location.reload() ;
+                } else {
+                    if(response.msg == 'login'){
+                        location.reload() ;
+                     }  
+                }
+            },
+            error : () => {
+                alert("Can't save results") ;
+            }
+        }) ;
+
     }
 }

@@ -18,6 +18,7 @@ class Setting(models.Model):
     max_questions = models.IntegerField()
     mark_per_questions = models.FloatField()
     time_per_questions = models.IntegerField(default=1)
+    pass_percentage = models.IntegerField(default=70)
 
     class Meta:
         db_table = 'settings'

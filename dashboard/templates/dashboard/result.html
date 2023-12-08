@@ -1,0 +1,22 @@
+{% extends "dashboard/dashboard.html" %}
+
+{% block admin %}
+<title>Result {{ username }}</title>
+<link href="/static/css/quiz/result.css" rel="stylesheet">
+<script> document.getElementById("nav-result").classList.add("selected-nav") ; </script>
+
+<div class="result-main">
+    <header class="page-header">Result</header>
+    {% if all_result %}
+    {% for res in all_result %}
+    
+    <div class="result-cont">
+        
+    </div>
+
+    {% endfor %}
+    {% endif %}
+</div>
+
+
+{% endblock admin %}

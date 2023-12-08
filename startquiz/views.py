@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.views import View
-from django.db.models import Q
+from django.db import transaction
+from django.utils import timezone
+import json
 
 from dashboard.models import Category, Question, Options
+from startquiz.models import QuizAttempt, Result
 from access.views import login
-from access.models import Setting
+from access.models import Setting, User
 
 # Create your views here.
 
@@ -42,7 +46,8 @@ class StartQuick(View):
 
             if index < len(all_questions):
                 qstn_id = all_questions[index]['id']
-
+                
+                context['category_id']  = cat_id
                 context['question']     = all_questions[index]
                 context['options']      = Options.objects.filter(question_id = qstn_id).all()
                 context['index']        = index
@@ -61,4 +66,54 @@ class ResultView(View):
         if not user_id:
             return redirect('/auth/login')
         
-        quiz = request.POST.get('quiz')
+        quiz    = request.POST.get('quiz')
+        cat_id  = request.POST.get('cat_id')
+
+
+        if not quiz or not cat_id:
+            return JsonResponse({'status' : False, 'msg' : 'Invalid data found','loc' : '' }, status=200)
+
+        quiz : dict = json.loads(quiz)
+
+        conf = Setting.objects.first()
+        max_questions   = conf.max_questions
+        max_mark        = conf.mark_per_questions
+        pass_percentage = conf.pass_percentage
+
+        total_mark = max_questions * max_mark
+
+
+        with transaction.atomic():
+            result = Result(
+                user = User.objects.get(id = user_id),
+                category = Category.objects.get(id = cat_id),
+                date = timezone.now(),
+            )
+            result.save()
+
+            attempt     = []
+            user_mark   = 0
+
+            for qstn, opt in quiz.items():
+                option = Options.objects.filter(id = opt).first()
+                attempt.append(
+                    QuizAttempt(
+                        result = Result.objects.get(id = result.id),
+                        question = Question.objects.get(id = qstn),
+                        option = Options.objects.get(id = opt),
+                        mark = max_mark if option.answer else 0
+                    )
+                )
+                user_mark += max_mark if option.answer else 0
+
+            user_perc = (user_mark / total_mark) * 100
+
+            QuizAttempt.objects.bulk_create(attempt)
+            res = Result.objects.get(id = result.id)
+            res.total_mark = user_mark
+            res.status = 1 if user_perc >= pass_percentage else 0
+            res.save()
+            
+
+        return JsonResponse({'status' : True, 'msg' : 'Your result successfully saved', 'loc' : f'quiz/result/{result.id}'}, status=200)
+    

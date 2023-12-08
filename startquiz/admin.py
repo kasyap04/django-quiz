@@ -5,10 +5,10 @@ from startquiz.models import QuizAttempt, Result
 # Register your models here.
 
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'status', 'total_mark', 'category')
+    list_display = ('id', 'user', 'status', 'total_mark', 'category', 'date')
 
 class QuizAttemptAdmin(admin.ModelAdmin):
-    list_display = ('id', 'result', 'question', 'date', 'mark')
+    list_display = ('id', 'result', 'question', 'mark', 'option')
 
 
 admin.site.register(Result, ResultAdmin)

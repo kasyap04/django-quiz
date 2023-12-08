@@ -22,8 +22,8 @@
                 <a href="/question"> <article id="nav-question">Add questions</article> </a>
                 {% if user_type == 'admin' %}
                 <a href="/category"> <article id="nav-category">Add category</article> </a>
-                <a href=""> <article class="nav- navbar">View users</article> </a>
-                <a href=""> <article class="nav- navbar">View results</article> </a>
+                <!-- <a href=""> <article class="nav- navbar">View users</article> </a>
+                <a href=""> <article id="nav-result navbar">View results</article> </a> -->
                 {% else %}
                 <a href="/quiz"> <article id="nav-quiz">Start quiz</article> </a>
                 {% endif %}
@@ -37,7 +37,44 @@
                   <div class="main-container">
                     <header class="page-header">Dashboard</header>
 
-                    <header class="sub-header">To users</header>
+                    {% if all_result %}
+                    
+                    <table border="0" cellpadding="10", cellspacing="0" class="result-table">
+                        <tr>
+                            <th>No</th>
+                            {% if user_type == 'admin' %}
+                            <th>User</th>
+                            {% endif %}
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Mark obtain</th>
+                            <th>Mark requir</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for res in all_result %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            {% if user_type == 'admin' %}
+                            <td>{{ res.user__username }}</td>
+                            {% endif %}
+                            <td>{{ res.category__category_name }}</td>
+                            <td>{{ res.date }}</td>
+                            <td>{{ res.status }}</td>
+                            <td>{{ res.max_mark }}</td>
+                            <td>{{ res.total_mark }}</td>
+                            <td>view</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                    
+                    <div class="result-cont">
+                      
+                    </div>
+                
+                    {% endif %}
+                    
                   </div>
                 {% endblock admin %}
             </div>

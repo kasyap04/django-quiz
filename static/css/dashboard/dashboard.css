@@ -63,3 +63,14 @@ aside article{
     min-width: 400px;
     width: 50%;
 }
+
+
+.result-table{
+    width: 100%;
+}
+
+.result-table th{
+    text-align: start;
+    color: grey;
+    font-weight: normal;
+}
